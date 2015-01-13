@@ -1,2 +1,3 @@
 test:
-	node tests/basictests.js
+	node tests/replytests.js
+	node tests/rollstotweetstests.js

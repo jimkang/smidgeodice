@@ -21,6 +21,8 @@
     "tape": "^3.0.3"
   },
   "dependencies": {
-    "better-know-a-tweet": "^1.0.0"
+    "better-know-a-tweet": "^1.0.0",
+    "conform-async": "^1.1.1",
+    "dicecup": "^1.0.6"
   }
 }
