@@ -3,7 +3,7 @@ var maxTweetLength = 140;
 function rollsToTweets(opts) {
   var userRefs = opts.inReplyTo.map(atIt);
   var userRefText = userRefs.join(' ');
-  userRefText += ': ';
+  userRefText += ' ';
 
   var body = '';
   var resultTexts = opts.results.map(textifyRollResult);
@@ -20,8 +20,8 @@ function rollsToTweets(opts) {
   else {
     var maxBodySegmentLength = maxTweetLength - userRefText.length - 4;
     var regex = new RegExp('.{1,' + maxBodySegmentLength + '}', 'g');
-    debugger;
     var bodies = body.match(regex);
+
     return bodies.map(function ornamentBody(body, i) {
       var ornamented = body.trim();
 

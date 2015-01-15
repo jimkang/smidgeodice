@@ -82,17 +82,16 @@ test('Convert roll results to tweet-sized text', function convertTests(t) {
   ];
 
   var expectedTweetSeries = [
-    ['@autocompleterap: 6'],
-    ['@autocompleterap: 4'],
-    ['@autocompleterap @translatedbible: 18 (6 + 6 + 6)'],
-    ['@r0llb0t @autocompleterap @translatedbible: 19 (8 + 8)'],
-    ['@wikisext @r0llb0t @autocompleterap @translatedbible: 20'],
-    ['@hwaetbot @translatedbible: 50 (6 + 6 + 6 + 6 + 6 + 6 + 6 + 6 + 6 + 6)'],
-    ['@hwaetbot @translatedbible @r0llb0t: 4, 25'],
+    ['@autocompleterap 6'],
+    ['@autocompleterap 4'],
+    ['@autocompleterap @translatedbible 18 (6 + 6 + 6)'],
+    ['@r0llb0t @autocompleterap @translatedbible 19 (8 + 8)'],
+    ['@wikisext @r0llb0t @autocompleterap @translatedbible 20'],
+    ['@hwaetbot @translatedbible 50 (6 + 6 + 6 + 6 + 6 + 6 + 6 + 6 + 6 + 6)'],
+    ['@hwaetbot @translatedbible @r0llb0t 4, 25'],
     [
-      '@pokemon_ebooks: 42 (6 + 6 + 6 + 6 + 6 + 6 + 6), 100, 240 (12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 >',
-      '@pokemon_ebooks: > + 12 + 12 + 12 + 12), 48 (2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + >',
-      '@pokemon_ebooks: > 2)'
+      '@pokemon_ebooks 42 (6 + 6 + 6 + 6 + 6 + 6 + 6), 100, 240 (12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 >',
+      '@pokemon_ebooks > + 12 + 12 + 12 + 12), 48 (2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2)'
     ]
   ];
 
