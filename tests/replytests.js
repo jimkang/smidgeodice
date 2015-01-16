@@ -187,7 +187,6 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
     },
     twit: {
       post: function mockPost(endpoint, opts, done) {
-        debugger;
         switch (postCallNumber) {
           case 0:
             t.equal(
@@ -211,7 +210,6 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
   });
 
   answerTweet(tweet, function done(error) {
-    debugger;
     t.ok(!error, 'It does not call back with an error.');
   });
 });
