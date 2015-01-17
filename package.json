@@ -24,6 +24,8 @@
     "better-know-a-tweet": "^1.0.1",
     "conform-async": "^1.1.1",
     "dicecup": "^1.0.7",
-    "queue-async": "^1.0.7"
+    "pm2": "^0.12.3",
+    "queue-async": "^1.0.7",
+    "twit": "^1.1.19"
   }
 }
