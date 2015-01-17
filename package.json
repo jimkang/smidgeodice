@@ -23,7 +23,7 @@
   "dependencies": {
     "better-know-a-tweet": "^1.0.1",
     "conform-async": "^1.1.1",
-    "dicecup": "^1.0.6",
+    "dicecup": "^1.0.7",
     "queue-async": "^1.0.7"
   }
 }

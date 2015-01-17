@@ -107,3 +107,35 @@ test('Convert roll results to tweet-sized text', function convertTests(t) {
     );
   }
 });
+
+test('Error rolls', function errorResults(t) {
+  t.plan(1);
+
+  var facesError = new Error('I don\'t have a die with that many faces.');
+  facesError.name = 'Not enough faces';
+
+  t.deepEqual(
+    rollsToTweets({
+      results: [
+        {
+          rolls: [6, 6, 6],
+          total: 18
+        },
+        {
+          rolls: [],
+          total: NaN,
+          error: facesError
+        },
+        {
+          rolls: [6, 6, 6],
+          total: 18
+        }
+      ],
+      inReplyTo: ['autocompleterap', 'translatedbible']
+    }),
+    [
+      '@autocompleterap @translatedbible 18 (6 + 6 + 6), [I don\'t have a die with that many faces.], 18 (6 + 6 + 6)'
+    ],
+    'Reports roll errors.'
+  );
+});

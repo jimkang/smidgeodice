@@ -42,14 +42,21 @@ function atIt(str) {
 }
 
 function textifyRollResult(result) {
-  var text = result.total;
+  var text;
 
-  if (result.rolls.length > 1) {
-    text += ' (';
-    text += result.rolls.join(' + ');
-    text += ')';
+  if (result.error) {
+    text = '[' + result.error.message + ']';
   }
+  else {
+    text = result.total;
 
+    if (result.rolls.length > 1) {
+      text += ' (';
+      text += result.rolls.join(' + ');
+      text += ')';
+    }
+  }
+  
   return text;
 }
 
