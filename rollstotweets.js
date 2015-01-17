@@ -1,9 +1,10 @@
-var maxTweetLength = 140;
+var continuationMarksLength = ' >'.length;
+var spaceAfterUserRefsLength = ' '.length;
+var maxTweetLength = 140 - spaceAfterUserRefsLength - continuationMarksLength;
 
 function rollsToTweets(opts) {
   var userRefs = opts.inReplyTo.map(atIt);
   var userRefText = userRefs.join(' ');
-  userRefText += ' ';
 
   var body = '';
   var resultTexts = opts.results.map(textifyRollResult);
@@ -15,25 +16,28 @@ function rollsToTweets(opts) {
   }
 
   if (body.length <= maxTweetLength - userRefText.length) {
-    return [userRefText + body];
+    return [userRefText + ' ' + body];
   }
   else {
-    var maxBodySegmentLength = maxTweetLength - userRefText.length - 4;
-    var regex = new RegExp('.{1,' + maxBodySegmentLength + '}', 'g');
-    var bodies = body.match(regex);
+    // var regex = new RegExp('.{1,' + maxBodySegmentLength + '}', 'g');
+    // var bodies = body.match(regex);
+    var words = body.split(/\s/);
+    var tweetTexts = [];
+    var currentTweetText = userRefText;
 
-    return bodies.map(function ornamentBody(body, i) {
-      var ornamented = body.trim();
-
-      if (i !== bodies.length - 1) {
-        ornamented = ornamented + ' >';
+    // Assumption: No words are themselves over maxTweetTextLength!
+    words.forEach(function appendToTweetText(word) {
+      if (currentTweetText.length + word.length + 1 > maxTweetLength) {
+        currentTweetText += ' >';
+        tweetTexts.push(currentTweetText);
+        // Start a new tweet.
+        currentTweetText = userRefText + ' >';
       }
-      if (i !== 0) {
-        ornamented = '> ' + ornamented;
-      }
-
-      return userRefText + ornamented;
+      currentTweetText += (' ' + word);
     });
+
+    tweetTexts.push(currentTweetText);
+    return tweetTexts;
   }
 }
 
@@ -50,13 +54,13 @@ function textifyRollResult(result) {
   else {
     text = result.total;
 
-    if (result.rolls.length > 1) {
-      text += ' (';
-      text += result.rolls.join(' + ');
-      text += ')';
-    }
+    // if (result.rolls.length > 1) {
+    //   text += ' (';
+    //   text += result.rolls.join(' + ');
+    //   text += ')';
+    // }
   }
-  
+
   return text;
 }
 

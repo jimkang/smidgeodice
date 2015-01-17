@@ -139,7 +139,7 @@ test('Reply with results', function normalSizedResults(t) {
         t.equal(endpoint, 'statuses/update', 'Posts an update');
         t.equal(
           opts.status, 
-          '@deathmtn 18 (6 + 6 + 6), 18 (6 + 6 + 6), 18 (6 + 6 + 6), 18 (6 + 6 + 6), 18 (6 + 6 + 6), 18 (6 + 6 + 6)',
+          '@deathmtn 18, 18, 18, 18, 18, 18',
           'Puts the die rolls in the tweet.'
         )
         conformAsync.callBackOnNextTick(done);
@@ -179,9 +179,35 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
             total: 240
           },
           {
-            rolls: fixtures.createRepeatArray(2, 24),
-            total: 48
-          }
+            total: 1342342343
+          },
+          {
+            total: 9089887979879
+          },
+          {
+            total: 1342342343
+          },
+          {
+            total: 9089887979879
+          },
+          {
+            total: 1342342343
+          },
+          {
+            total: 9089887979879
+          },
+          {
+            total: 1342342343
+          },
+          {
+            total: 9089887979879
+          },
+          {
+            total: 1342342343
+          },
+          {
+            total: 9089887979879
+          }          
         ];
       }
     },
@@ -191,14 +217,14 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
           case 0:
             t.equal(
               opts.status, 
-              '@pokemon_ebooks 42 (6 + 6 + 6 + 6 + 6 + 6 + 6), 100, 240 (12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 + 12 >',
+              '@pokemon_ebooks 42, 100, 240, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, 9089887979879, >',
               'The first tweet posted is correct.'
             );
             break;
           case 1:
             t.equal(
               opts.status, 
-              '@pokemon_ebooks > + 12 + 12 + 12 + 12), 48 (2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2)',
+              '@pokemon_ebooks > 1342342343, 9089887979879',
               'The second tweet posted is correct.'
             );
             break;
