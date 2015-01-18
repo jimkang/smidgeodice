@@ -18,7 +18,7 @@ function mockGetStamp(date) {
 }
 
 test('Avoid replying to self-tweets', function selfTweets(t) {
-  t.plan(2);
+  t.plan(1);
 
   var tweet = createMockTweet();
   tweet.user = {
@@ -28,9 +28,6 @@ test('Avoid replying to self-tweets', function selfTweets(t) {
   var answerTweet = createAnswerTweet({
     logger: {
       log: function mockLog(message) {
-        t.equal(message, 'Self-tweet: Not replying.', 
-          'Logs that it doesn\'t reply to own tweets.'
-        );
       }
     },
     twit: {

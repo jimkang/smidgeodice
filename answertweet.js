@@ -13,7 +13,7 @@ function createAnswerTweet(constructorOpts) {
 
   function answerTweet(tweet, done) {
     if (betterKnow.isTweetOfUser('r0llb0t', tweet)) {
-      logger.log('Self-tweet: Not replying.');
+      // logger.log('Self-tweet: Not replying.');
       conformAsync.callBackOnNextTick(done, null, '');
       return;
     }
