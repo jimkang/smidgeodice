@@ -54,7 +54,7 @@ function textifyRollResult(result) {
     text = '[' + result.error.message + ']';
   }
   else {
-    text = formatRollSource(result.source) + ': ';
+    text = formatRollSource(result.source) + ' ⇒ ';
     text += result.total;
 
     // if (result.rolls.length > 1) {

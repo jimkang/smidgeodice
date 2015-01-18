@@ -158,7 +158,7 @@ test('Reply with results', function normalSizedResults(t) {
         t.equal(endpoint, 'statuses/update', 'Posts an update');
         t.equal(
           opts.status, 
-          '@deathmtn 🐙\n3d6: 18\n3d6: 18\n3d6: 18\n3d6: 18\n3d6: 18\n3d6: 18',
+          '@deathmtn 🐙\n3d6 ⇒ 18\n3d6 ⇒ 18\n3d6 ⇒ 18\n3d6 ⇒ 18\n3d6 ⇒ 18\n3d6 ⇒ 18',
           'Puts the die rolls in the tweet.'
         )
         conformAsync.callBackOnNextTick(done);
@@ -369,21 +369,21 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
           case 0:
             t.equal(
               opts.status, 
-              '@pokemon_ebooks 🐙\n7d6: 42\nd100: 100\n20d12: 240\n38d420: 1342342343\n97d2545: 9089887979879\n38d420: 1342342343\n97d2545: 9089887979879\n >',
+              '@pokemon_ebooks 🐙\n7d6 ⇒ 42\nd100 ⇒ 100\n20d12 ⇒ 240\n38d420 ⇒ 1342342343\n97d2545 ⇒ 9089887979879\n38d420 ⇒ 1342342343\n >',
               'The first tweet posted is correct.'
             );
             break;
           case 1:
             t.equal(
               opts.status,
-              '@pokemon_ebooks 🐙\n> 38d420: 1342342343\n97d2545: 9089887979879\n38d420: 1342342343\n97d2545: 9089887979879\n38d420: 1342342343\n >',
+              '@pokemon_ebooks 🐙\n> 97d2545 ⇒ 9089887979879\n38d420 ⇒ 1342342343\n97d2545 ⇒ 9089887979879\n38d420 ⇒ 1342342343\n97d2545 ⇒ 9089887979879\n >',
               'The second tweet posted is correct.'
             );
             break;
           case 2:
             t.equal(
               opts.status,
-              '@pokemon_ebooks 🐙\n> 97d2545: 9089887979879',
+              '@pokemon_ebooks 🐙\n> 38d420 ⇒ 1342342343\n97d2545 ⇒ 9089887979879',
               'The third tweet posted is correct.'
             );
             break;
