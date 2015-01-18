@@ -1,5 +1,5 @@
 var test = require('tape');
-var rollsToTweets = require('../rollstotweets');
+var createRollsToTweets = require('../rollstotweets');
 var fixtures = require('./fixtures');
 
 test('Convert roll results to tweet-sized text', function convertTests(t) {
@@ -82,19 +82,28 @@ test('Convert roll results to tweet-sized text', function convertTests(t) {
   ];
 
   var expectedTweetSeries = [
-    ['@autocompleterap 6'],
-    ['@autocompleterap 4'],
-    ['@autocompleterap @translatedbible 18'],
-    ['@r0llb0t @autocompleterap @translatedbible 19'],
-    ['@wikisext @r0llb0t @autocompleterap @translatedbible 20'],
-    ['@hwaetbot @translatedbible 50'],
-    ['@hwaetbot @translatedbible @r0llb0t 4, 25'],
+    ['@autocompleterap 🐝 6'],
+    ['@autocompleterap 🐝 4'],
+    ['@autocompleterap @translatedbible 🐝 18'],
+    ['@r0llb0t @autocompleterap @translatedbible 🐝 19'],
+    ['@wikisext @r0llb0t @autocompleterap @translatedbible 🐝 20'],
+    ['@hwaetbot @translatedbible 🐝 50'],
+    ['@hwaetbot @translatedbible @r0llb0t 🐝 4, 25'],
     [
-      '@pokemon_ebooks 42, 100, 240, 48'
+      '@pokemon_ebooks 🐝 42, 100, 240, 48'
     ]
   ];
 
-  t.plan(8);
+  t.plan(16);
+
+  var rollsToTweets = createRollsToTweets({
+    getOneCharStamp: function mockGetStamp(date) {
+      t.ok(!isNaN(date.getTime()), 'It passes the date to getOneCharStamp.');
+      // A real getOneCharStamp implementation would acutally return different 
+      // things here.
+      return '🐝';
+    }
+  });
 
   for (var i = 0; i < 8; ++i) {
     t.deepEqual(
@@ -112,6 +121,12 @@ test('Error rolls', function errorResults(t) {
 
   var facesError = new Error('I don\'t have a die with that many faces.');
   facesError.name = 'Not enough faces';
+
+  var rollsToTweets = createRollsToTweets({
+    getOneCharStamp: function mockGetStamp() {
+      return '🐝';
+    }
+  });
 
   t.deepEqual(
     rollsToTweets({
@@ -133,7 +148,7 @@ test('Error rolls', function errorResults(t) {
       inReplyTo: ['autocompleterap', 'translatedbible']
     }),
     [
-      '@autocompleterap @translatedbible 18, [I don\'t have a die with that many faces.], 18'
+      '@autocompleterap @translatedbible 🐝 18, [I don\'t have a die with that many faces.], 18'
     ],
     'Reports roll errors.'
   );

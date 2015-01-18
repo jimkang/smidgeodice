@@ -2,6 +2,7 @@ var Twit = require('twit');
 var config = require('./config');
 var createAnswerTweet = require('./answertweet');
 var createDiceCup = require('dicecup');
+var emojiSource = require('emojisource');
 
 console.log('The r0llb0t server is running.');
 
@@ -15,7 +16,8 @@ var answerTweet = createAnswerTweet({
   dicecup: createDiceCup({
     numberOfRollsLimit: 10000,
     numberOfFacesOnLargestDie: 50000
-  })
+  }),
+  getOneCharStamp: emojiSource.getRandomTopicEmoji
 });
 
 var stream = twit.stream('user');

@@ -1,12 +1,15 @@
 var conformAsync = require('conform-async');
 var betterKnow = require('better-know-a-tweet');
-var rollsToTweets = require('./rollstotweets');
+var createRollsToTweets = require('./rollstotweets');
 var queue = require('queue-async');
 
 function createAnswerTweet(constructorOpts) {
   var logger = constructorOpts.logger;
   var twit = constructorOpts.twit;
   var dicecup = constructorOpts.dicecup;
+  var rollsToTweets = createRollsToTweets({
+    getOneCharStamp: constructorOpts.getOneCharStamp
+  });
 
   function answerTweet(tweet, done) {
     if (betterKnow.isTweetOfUser('r0llb0t', tweet)) {
@@ -20,7 +23,8 @@ function createAnswerTweet(constructorOpts) {
       return;
     }
 
-    var outcomes = dicecup.roll(tweet.text);
+    var outcomes = dicecup.roll(stripMentionsFromText(tweet.text));
+
     if (outcomes.some(defined)) {
       var replyToUsers = removeSelfFromUserList(
         betterKnow.whosInTheTweet(tweet)
@@ -62,6 +66,10 @@ function removeSelfFromUserList(users) {
 
 function usernameIsNotRollb0t(username) {
   return username.toLowerCase() !== 'r0llb0t';
+}
+
+function stripMentionsFromText(text) {
+  return text.replace(/@\w+/g, '');
 }
 
 module.exports = createAnswerTweet;

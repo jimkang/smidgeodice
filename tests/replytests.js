@@ -13,6 +13,10 @@ function createMockTweet() {
   };
 }
 
+function mockGetStamp(date) {
+  return '🐙';
+}
+
 test('Avoid replying to self-tweets', function selfTweets(t) {
   t.plan(2);
 
@@ -139,12 +143,13 @@ test('Reply with results', function normalSizedResults(t) {
         t.equal(endpoint, 'statuses/update', 'Posts an update');
         t.equal(
           opts.status, 
-          '@deathmtn 18, 18, 18, 18, 18, 18',
+          '@deathmtn 🐙 18, 18, 18, 18, 18, 18',
           'Puts the die rolls in the tweet.'
         )
         conformAsync.callBackOnNextTick(done);
       }
-    }
+    },
+    getOneCharStamp: mockGetStamp
   });
 
   answerTweet(tweet, function done(error) {
@@ -217,14 +222,14 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
           case 0:
             t.equal(
               opts.status, 
-              '@pokemon_ebooks 42, 100, 240, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, 9089887979879, >',
+              '@pokemon_ebooks 🐙 42, 100, 240, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, >',
               'The first tweet posted is correct.'
             );
             break;
           case 1:
             t.equal(
               opts.status, 
-              '@pokemon_ebooks > 1342342343, 9089887979879',
+              '@pokemon_ebooks 🐙 > 9089887979879, 1342342343, 9089887979879',
               'The second tweet posted is correct.'
             );
             break;
@@ -232,10 +237,43 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
         postCallNumber += 1;
         conformAsync.callBackOnNextTick(done);
       }
-    }
+    },
+    getOneCharStamp: mockGetStamp
   });
 
   answerTweet(tweet, function done(error) {
     t.ok(!error, 'It does not call back with an error.');
   });
 });
+
+test('Do not pass @names to dicecup', function noAtNamesForDiceCup(t) {
+  t.plan(2);
+
+  var tweet = createMockTweet();
+  tweet.user = {
+    screen_name: 'autocompleterap'
+  };
+  tweet.text = '@r0llb0t @deathmtn d20!!!';
+
+  var answerTweet = createAnswerTweet({
+    logger: {
+      log: function mockLog(message) {}
+    },    
+    twit: {
+      post: function mockPost(opts) {}
+    },
+    dicecup: {
+      roll: function mockRoll(diceString) {
+        debugger;
+        t.equal(diceString.indexOf('@'), -1, 'It does not send @names to cup.');
+        return [];
+      }
+    },
+    getOneCharStamp: mockGetStamp    
+  });
+
+  answerTweet(tweet, function done(error) {
+    t.ok(!error, 'It does not call back with an error.');
+  });
+});
+
