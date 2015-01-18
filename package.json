@@ -23,7 +23,7 @@
   "dependencies": {
     "better-know-a-tweet": "^1.0.1",
     "conform-async": "^1.1.1",
-    "dicecup": "^1.0.7",
+    "dicecup": "^1.0.9",
     "emojisource": "^1.0.0",
     "pm2": "^0.12.3",
     "queue-async": "^1.0.7",

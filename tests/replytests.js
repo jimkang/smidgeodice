@@ -98,6 +98,17 @@ test('Don\'t reply with if there\'s no results', function noResults(t) {
   });
 });
 
+var threed6source = {
+  "times": 3,
+  "faces": 6,
+  "keep": null,
+  "lowest": false,
+  "highest": false,
+  "multiplier": 1,
+  "modifier": 0,
+  "repeat": 1
+};
+
 test('Reply with results', function normalSizedResults(t) {
   t.plan(3);
 
@@ -113,27 +124,33 @@ test('Reply with results', function normalSizedResults(t) {
         return [
           {
             rolls: [6, 6, 6],
-            total: 18
+            total: 18,
+            source: threed6source
           },
           {
             rolls: [6, 6, 6],
-            total: 18
+            total: 18,
+            source: threed6source
           },      
           {
             rolls: [6, 6, 6],
-            total: 18
+            total: 18,
+            source: threed6source
           },      
           {
             rolls: [6, 6, 6],
-            total: 18
+            total: 18,
+            source: threed6source
           },      
           {
             rolls: [6, 6, 6],
-            total: 18
+            total: 18,
+            source: threed6source
           },      
           {
             rolls: [6, 6, 6],
-            total: 18
+            total: 18,
+            source: threed6source
           }
         ];
       }
@@ -143,7 +160,7 @@ test('Reply with results', function normalSizedResults(t) {
         t.equal(endpoint, 'statuses/update', 'Posts an update');
         t.equal(
           opts.status, 
-          '@deathmtn 🐙 18, 18, 18, 18, 18, 18',
+          '@deathmtn 🐙 3d6: 18, 3d6: 18, 3d6: 18, 3d6: 18, 3d6: 18, 3d6: 18',
           'Puts the die rolls in the tweet.'
         )
         conformAsync.callBackOnNextTick(done);
@@ -158,7 +175,7 @@ test('Reply with results', function normalSizedResults(t) {
 });
 
 test('Reply multiple times with long results', function largeSizedResults(t) {
-  t.plan(3);
+  t.plan(4);
 
   var tweet = createMockTweet();
   tweet.user = {
@@ -173,45 +190,177 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
         return [
           {
             rolls: [6, 6, 6, 6, 6, 6, 6],
-            total: 42
+            total: 42,
+            source: {
+              "times": 7,
+              "faces": 6,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
             rolls: [100],
-            total: 100
+            total: 100,
+            source: {
+              "times": 1,
+              "faces": 100,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
             rolls: fixtures.createRepeatArray(12, 20),
-            total: 240
+            total: 240,
+            source: {
+              "times": 20,
+              "faces": 12,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
-            total: 1342342343
+            total: 1342342343,
+            // Just for testing: This couldn't actually generate that total.
+            source: {
+              "times": 38,
+              "faces": 420,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
-            total: 9089887979879
+            total: 9089887979879,
+            // Just for testing: This couldn't actually generate that total.
+            source: {
+              "times": 97,
+              "faces": 2545,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }            
           },
           {
-            total: 1342342343
+            total: 1342342343,
+            source: {
+              "times": 38,
+              "faces": 420,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
-            total: 9089887979879
+            total: 9089887979879,
+            source: {
+              "times": 97,
+              "faces": 2545,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }            
           },
           {
-            total: 1342342343
+            total: 1342342343,
+            source: {
+              "times": 38,
+              "faces": 420,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
-            total: 9089887979879
+            total: 9089887979879,
+            source: {
+              "times": 97,
+              "faces": 2545,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }            
           },
           {
-            total: 1342342343
+            total: 1342342343,
+            source: {
+              "times": 38,
+              "faces": 420,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
-            total: 9089887979879
+            total: 9089887979879,
+            source: {
+              "times": 97,
+              "faces": 2545,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }            
           },
           {
-            total: 1342342343
+            total: 1342342343,
+            source: {
+              "times": 38,
+              "faces": 420,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
           },
           {
-            total: 9089887979879
+            total: 9089887979879,
+            source: {
+              "times": 97,
+              "faces": 2545,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }            
           }          
         ];
       }
@@ -222,15 +371,22 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
           case 0:
             t.equal(
               opts.status, 
-              '@pokemon_ebooks 🐙 42, 100, 240, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, 9089887979879, 1342342343, >',
+              '@pokemon_ebooks 🐙 7d6: 42, d100: 100, 20d12: 240, 38d420: 1342342343, 97d2545: 9089887979879, 38d420: 1342342343, >',
               'The first tweet posted is correct.'
             );
             break;
           case 1:
             t.equal(
               opts.status, 
-              '@pokemon_ebooks 🐙 > 9089887979879, 1342342343, 9089887979879',
+              '@pokemon_ebooks 🐙 > 97d2545: 9089887979879, 38d420: 1342342343, 97d2545: 9089887979879, 38d420: 1342342343, 97d2545: 9089887979879, >',
               'The second tweet posted is correct.'
+            );
+            break;
+          case 2:
+            t.equal(
+              opts.status, 
+              '@pokemon_ebooks 🐙 > 38d420: 1342342343, 97d2545: 9089887979879',
+              'The third tweet posted is correct.'
             );
             break;
         }

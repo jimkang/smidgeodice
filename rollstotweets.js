@@ -28,12 +28,14 @@ function createRollsToTweets(constructorOpts) {
       return [prefixText + ' ' + body];
     }
     else {
-      var words = body.split(/\s/);
+      // Not breaking on just \s to avoid separating a result from its source, 
+      // In other words: keep '3d6:' and '18' together.
+      var words = body.split(/,\s/);
       var tweetTexts = [];
       var currentTweetText = prefixText;
 
       // Assumption: No words are themselves over maxTweetTextLength!
-      words.forEach(function appendToTweetText(word) {
+      words.forEach(function appendToTweetText(word, i) {
         if (currentTweetText.length + word.length + 1 > maxTweetLength) {
           currentTweetText += ' >';
           tweetTexts.push(currentTweetText);
@@ -41,6 +43,11 @@ function createRollsToTweets(constructorOpts) {
           currentTweetText = prefixText + ' >';
         }
         currentTweetText += (' ' + word);
+
+        // Put a comma after each group except for the last one.
+        if (i !== words.length - 1) {
+          currentTweetText += ',';
+        }
       });
 
       tweetTexts.push(currentTweetText);
@@ -62,13 +69,41 @@ function textifyRollResult(result) {
     text = '[' + result.error.message + ']';
   }
   else {
-    text = result.total;
+    text = formatRollSource(result.source) + ': ';
+    text += result.total;
 
     // if (result.rolls.length > 1) {
     //   text += ' (';
     //   text += result.rolls.join(' + ');
     //   text += ')';
     // }
+  }
+
+  return text;
+}
+
+// Based on node-dice-js's format function.
+function formatRollSource(source) {
+  if (!source || typeof source !== 'object') {
+    return '???';
+  }
+
+  var text = '';
+
+  // add the number of dice to be rolled, if it more than one.
+  if (source.times && source.times > 1) {
+    text += source.times;
+  }
+
+  // add the number of faces
+  text += (source.faces) ? 'd' + source.faces : 'd' + 20;
+
+  // add the modifier
+  if (source.modifier && source.modifier > 0) {
+    text += '+' + source.modifier;
+  }
+  else if (source.modifier) {
+    text += source.modifier;
   }
 
   return text;
