@@ -13,8 +13,8 @@ function createRollsToTweets(constructorOpts) {
     var userRefText = userRefs.join(' ');
     // The point of the one char stamp (which is hopefully somewhat unique) is 
     // to make it possible to tweet repeat results multiple times.
-    var prefixText = userRefText + ' ' + getOneCharStamp(new Date()) + ' ';
-        
+    var prefixText = userRefText + ' ' + getOneCharStamp(new Date()) + '\n';
+
     var resultTexts = opts.results.map(textifyRollResult);
 
     var tweetTexts = [];
