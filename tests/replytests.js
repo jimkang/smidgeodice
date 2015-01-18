@@ -2,6 +2,7 @@ var test = require('tape');
 var createAnswerTweet = require('../answertweet');
 var fixtures = require('./fixtures');
 var conformAsync = require('conform-async');
+var createDiceCup = require('dicecup');
 
 function createMockTweet() {
   return {
@@ -430,3 +431,36 @@ test('Do not pass @names to dicecup', function noAtNamesForDiceCup(t) {
   });
 });
 
+test('Big request', function bigRequest(t) {
+  t.plan(2);
+
+  var tweet = createMockTweet();
+  tweet.user = {
+    screen_name: 'autocompleterap'
+  };
+  tweet.text = '@r0llb0t 34532452345d56, 3d6,3d6,3d6,3d6,3d6,3d6,';
+
+  var answerTweet = createAnswerTweet({
+    logger: {
+      log: function mockLog(message) {}
+    },    
+    twit: {
+      post: function mockPost(endpoint, opts, done) {
+        conformAsync.callBackOnNextTick(done);
+      }
+    },
+    // Using an actual dicecup for this test.
+    dicecup: createDiceCup({
+      numberOfRollsLimit: 10000,
+      numberOfFacesOnLargestDie: 50000
+    }),
+    getOneCharStamp: mockGetStamp    
+  });
+
+  t.doesNotThrow(function callAnswer() {
+    answerTweet(tweet, function done(error) {
+      t.ok(!error, 'It does not call back with an error.');
+    });
+  },
+  'Handles absurd request without throwing.');
+})
