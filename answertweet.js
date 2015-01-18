@@ -12,12 +12,12 @@ function createAnswerTweet(constructorOpts) {
   });
 
   function answerTweet(tweet, done) {
-    if (betterKnow.isTweetOfUser('r0llb0t', tweet)) {
+    if (betterKnow.isTweetOfUser('smidgeodice', tweet)) {
       // logger.log('Self-tweet: Not replying.');
       conformAsync.callBackOnNextTick(done, null, '');
       return;
     }
-    else if (betterKnow.isRetweetOfUser('r0llb0t', tweet)) {
+    else if (betterKnow.isRetweetOfUser('smidgeodice', tweet)) {
       logger.log('Retweet of self: Not replying.');
       conformAsync.callBackOnNextTick(done, null, '');
       return;
@@ -65,7 +65,7 @@ function removeSelfFromUserList(users) {
 }
 
 function usernameIsNotRollb0t(username) {
-  return username.toLowerCase() !== 'r0llb0t';
+  return username.toLowerCase() !== 'smidgeodice';
 }
 
 function stripMentionsFromText(text) {

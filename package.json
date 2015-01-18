@@ -1,5 +1,5 @@
 {
-  "name": "r0llb0t",
+  "name": "smidgeodice",
   "version": "1.0.0",
   "description": "A bot that will roll dice for you.",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jimkang/r0llb0t.git"
+    "url": "git@github.com:jimkang/smidgeodice.git"
   },
   "keywords": [],
   "author": "Jim Kang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jimkang/r0llb0t/issues"
+    "url": "https://github.com/jimkang/smidgeodice/issues"
   },
-  "homepage": "https://github.com/jimkang/r0llb0t",
+  "homepage": "https://github.com/jimkang/smidgeodice",
   "devDependencies": {
     "tape": "^3.0.3"
   },

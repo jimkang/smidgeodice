@@ -1,4 +1,4 @@
-r0llb0t
+smidgeodice
 ==================
 
 A bot that will roll dice for you.

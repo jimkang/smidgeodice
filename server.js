@@ -4,7 +4,7 @@ var createAnswerTweet = require('./answertweet');
 var createDiceCup = require('dicecup');
 var emojiSource = require('emojisource');
 
-console.log('The r0llb0t server is running.');
+console.log('The smidgeodice server is running.');
 
 var twit = new Twit(config.twitter);
 // This is why prototypal inheritance sucks:

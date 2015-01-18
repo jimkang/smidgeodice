@@ -23,7 +23,7 @@ test('Avoid replying to self-tweets', function selfTweets(t) {
 
   var tweet = createMockTweet();
   tweet.user = {
-    screen_name: 'r0llb0t'
+    screen_name: 'smidgeodice'
   };
 
   var answerTweet = createAnswerTweet({
@@ -49,7 +49,7 @@ test('Avoid replying to retweets', function selfTweets(t) {
   var tweet = createMockTweet();
   tweet.retweeted_status = {
     user: {
-      screen_name: 'r0llb0t'
+      screen_name: 'smidgeodice'
     }
   };
 
@@ -114,7 +114,7 @@ test('Reply with results', function normalSizedResults(t) {
   tweet.user = {
     screen_name: 'deathmtn'
   };
-  tweet.text = '@r0llb0t 3d6 3d6 3d6 3d6 3d6 3d6'
+  tweet.text = '@smidgeodice 3d6 3d6 3d6 3d6 3d6 3d6'
 
   var answerTweet = createAnswerTweet({
     dicecup: {
@@ -407,7 +407,7 @@ test('Do not pass @names to dicecup', function noAtNamesForDiceCup(t) {
   tweet.user = {
     screen_name: 'autocompleterap'
   };
-  tweet.text = '@r0llb0t @deathmtn d20!!!';
+  tweet.text = '@smidgeodice @deathmtn d20!!!';
 
   var answerTweet = createAnswerTweet({
     logger: {
@@ -438,7 +438,7 @@ test('Big request', function bigRequest(t) {
   tweet.user = {
     screen_name: 'autocompleterap'
   };
-  tweet.text = '@r0llb0t 34532452345d56, 3d6,3d6,3d6,3d6,3d6,3d6,';
+  tweet.text = '@smidgeodice 34532452345d56, 3d6,3d6,3d6,3d6,3d6,3d6,';
 
   var answerTweet = createAnswerTweet({
     logger: {

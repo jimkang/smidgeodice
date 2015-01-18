@@ -196,10 +196,10 @@ test('Convert roll results to tweet-sized text', function convertTests(t) {
     ['autocompleterap'],
     ['autocompleterap'],
     ['autocompleterap', 'translatedbible'],
-    ['r0llb0t', 'autocompleterap', 'translatedbible'],
-    ['wikisext', 'r0llb0t', 'autocompleterap', 'translatedbible'],
+    ['smidgeodice', 'autocompleterap', 'translatedbible'],
+    ['wikisext', 'smidgeodice', 'autocompleterap', 'translatedbible'],
     ['hwaetbot', 'translatedbible'],
-    ['hwaetbot', 'translatedbible', 'r0llb0t'],
+    ['hwaetbot', 'translatedbible', 'smidgeodice'],
     ['pokemon_ebooks']
   ];
 
@@ -207,10 +207,10 @@ test('Convert roll results to tweet-sized text', function convertTests(t) {
     ['@autocompleterap 🐝\nd6 ⇒ 6'],
     ['@autocompleterap 🐝\nd4 ⇒ 4'],
     ['@autocompleterap @translatedbible 🐝\n3d6 ⇒ 18'],
-    ['@r0llb0t @autocompleterap @translatedbible 🐝\n2d8+3 ⇒ 19'],
-    ['@wikisext @r0llb0t @autocompleterap @translatedbible 🐝\nd20 ⇒ 20'],
+    ['@smidgeodice @autocompleterap @translatedbible 🐝\n2d8+3 ⇒ 19'],
+    ['@wikisext @smidgeodice @autocompleterap @translatedbible 🐝\nd20 ⇒ 20'],
     ['@hwaetbot @translatedbible 🐝\n10d6-10 ⇒ 50'],
-    ['@hwaetbot @translatedbible @r0llb0t 🐝\nd4 ⇒ 4\nd20+5 ⇒ 25'],
+    ['@hwaetbot @translatedbible @smidgeodice 🐝\nd4 ⇒ 4\nd20+5 ⇒ 25'],
     ['@pokemon_ebooks 🐝\n7d6 ⇒ 42\nd100 ⇒ 100\n20d12 ⇒ 240\n24d2 ⇒ 48']
   ];
 
