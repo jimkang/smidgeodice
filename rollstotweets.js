@@ -2,8 +2,8 @@ var continuationMarksLength = ' >'.length;
 var spaceAfterUserRefsLength = ' '.length;
 var oneCharStampPlusSpaceLength = 2;
 
-var maxTweetLength = 140 - spaceAfterUserRefsLength - continuationMarksLength 
-  - oneCharStampPlusSpaceLength;
+var maxTweetLength = 140 - spaceAfterUserRefsLength - 
+  continuationMarksLength - oneCharStampPlusSpaceLength;
 
 function createRollsToTweets(constructorOpts) {
   var getOneCharStamp = constructorOpts.getOneCharStamp;
@@ -13,46 +13,31 @@ function createRollsToTweets(constructorOpts) {
     var userRefText = userRefs.join(' ');
     // The point of the one char stamp (which is hopefully somewhat unique) is 
     // to make it possible to tweet repeat results multiple times.
-    var prefixText = userRefText + ' ' + getOneCharStamp(new Date());
-
-    var body = '';
+    var prefixText = userRefText + ' ' + getOneCharStamp(new Date()) + ' ';
+        
     var resultTexts = opts.results.map(textifyRollResult);
-    if (resultTexts.length > 1) {
-      body += resultTexts.join(', ');
-    }
-    else {
-      body += resultTexts[0];
-    }
 
-    if (body.length <= maxTweetLength - prefixText.length) {
-      return [prefixText + ' ' + body];
-    }
-    else {
-      // Not breaking on just \s to avoid separating a result from its source, 
-      // In other words: keep '3d6:' and '18' together.
-      var words = body.split(/,\s/);
-      var tweetTexts = [];
-      var currentTweetText = prefixText;
+    var tweetTexts = [];
+    var currentTweetText = prefixText;
 
-      // Assumption: No words are themselves over maxTweetTextLength!
-      words.forEach(function appendToTweetText(word, i) {
-        if (currentTweetText.length + word.length + 1 > maxTweetLength) {
-          currentTweetText += ' >';
-          tweetTexts.push(currentTweetText);
-          // Start a new tweet.
-          currentTweetText = prefixText + ' >';
-        }
-        currentTweetText += (' ' + word);
+    // Assumption: No resultTexts are themselves over maxTweetTextLength!
+    resultTexts.forEach(function appendToTweetText(resultText, i) {
+      if (currentTweetText.length + resultText.length + 1 > maxTweetLength) {
+        currentTweetText += ' >';
+        tweetTexts.push(currentTweetText);
+        // Start a new tweet.
+        currentTweetText = prefixText + '> ';
+      }
+      currentTweetText += resultText;
 
-        // Put a comma after each group except for the last one.
-        if (i !== words.length - 1) {
-          currentTweetText += ',';
-        }
-      });
+      // Put a line break after each group except for the last one.
+      if (i !== resultTexts.length - 1) {
+        currentTweetText += '\n';
+      }
+    });
 
-      tweetTexts.push(currentTweetText);
-      return tweetTexts;
-    }
+    tweetTexts.push(currentTweetText);
+    return tweetTexts;
   }
 
   return rollsToTweets;

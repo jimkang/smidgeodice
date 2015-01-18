@@ -210,8 +210,8 @@ test('Convert roll results to tweet-sized text', function convertTests(t) {
     ['@r0llb0t @autocompleterap @translatedbible 🐝 2d8+3: 19'],
     ['@wikisext @r0llb0t @autocompleterap @translatedbible 🐝 d20: 20'],
     ['@hwaetbot @translatedbible 🐝 10d6-10: 50'],
-    ['@hwaetbot @translatedbible @r0llb0t 🐝 d4: 4, d20+5: 25'],
-    ['@pokemon_ebooks 🐝 7d6: 42, d100: 100, 20d12: 240, 24d2: 48']
+    ['@hwaetbot @translatedbible @r0llb0t 🐝 d4: 4\nd20+5: 25'],
+    ['@pokemon_ebooks 🐝 7d6: 42\nd100: 100\n20d12: 240\n24d2: 48']
   ];
 
   t.plan(16);
@@ -270,7 +270,7 @@ test('Error rolls', function errorResults(t) {
       inReplyTo: ['autocompleterap', 'translatedbible']
     }),
     [
-      '@autocompleterap @translatedbible 🐝 3d6: 18, [I don\'t have a die with that many faces.], 3d6: 18'
+      '@autocompleterap @translatedbible 🐝 3d6: 18\n[I don\'t have a die with that many faces.]\n3d6: 18'
     ],
     'Reports roll errors.'
   );
