@@ -24,7 +24,9 @@ sync-worktree-to-git:
 
 post-receive: sync-worktree-to-git npm-install stop run
 
-# The idea is for the repo's post-receive hook to simply be:
+# The idea is for the repo's post-receive hook to simply be (minus the var reference):
+# However, it will only work *after* the first time the worktree is synced. That 
+# has to be done manually the first time.
 # cd /var/www/$(APPNAME) && make post-receive
 
 install-logrotate-conf:
