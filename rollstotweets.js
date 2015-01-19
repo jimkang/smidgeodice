@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 var continuationMarksLength = ' >'.length;
 var spaceAfterUserRefsLength = ' '.length;
 var oneCharStampPlusSpaceLength = 2;
@@ -7,15 +9,19 @@ var maxTweetLength = 140 - spaceAfterUserRefsLength -
 
 function createRollsToTweets(constructorOpts) {
   var getOneCharStamp = constructorOpts.getOneCharStamp;
+  var getDiceResultDivider = constructorOpts.getDiceResultDivider;
 
   function rollsToTweets(opts) {
     var userRefs = opts.inReplyTo.map(atIt);
     var userRefText = userRefs.join(' ');
     // The point of the one char stamp (which is hopefully somewhat unique) is 
     // to make it possible to tweet repeat results multiple times.
-    var prefixText = userRefText + ' ' + getOneCharStamp(new Date()) + '\n';
+    var now = new Date();
+    var prefixText = userRefText + ' ' + getOneCharStamp(now) + '\n';
+    var divider = getDiceResultDivider(now);
 
-    var resultTexts = opts.results.map(textifyRollResult);
+    var textifyWithDivider = _.curry(textifyRollResult)(divider);
+    var resultTexts = opts.results.map(textifyWithDivider);
 
     var tweetTexts = [];
     var currentTweetText = prefixText;
@@ -47,14 +53,14 @@ function atIt(str) {
   return '@' + str;
 }
 
-function textifyRollResult(result) {
+function textifyRollResult(divider, result) {
   var text;
 
   if (result.error) {
     text = '[' + result.error.message + ']';
   }
   else {
-    text = formatRollSource(result.source) + ' ⇒ ';
+    text = formatRollSource(result.source) + divider;
     text += result.total;
 
     // if (result.rolls.length > 1) {

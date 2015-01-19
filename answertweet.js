@@ -8,7 +8,8 @@ function createAnswerTweet(constructorOpts) {
   var twit = constructorOpts.twit;
   var dicecup = constructorOpts.dicecup;
   var rollsToTweets = createRollsToTweets({
-    getOneCharStamp: constructorOpts.getOneCharStamp
+    getOneCharStamp: constructorOpts.getOneCharStamp,
+    getDiceResultDivider: constructorOpts.getDiceResultDivider
   });
 
   function answerTweet(tweet, done) {

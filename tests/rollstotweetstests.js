@@ -13,6 +13,10 @@ var threed6source = {
   "repeat": 1
 };
 
+function mockGetDiceResultDivider(date) {
+  return ' ⇒ ';
+}
+
 test('Convert roll results to tweet-sized text', function convertTests(t) {
   var results = [
     [
@@ -222,7 +226,8 @@ test('Convert roll results to tweet-sized text', function convertTests(t) {
       // A real getOneCharStamp implementation would acutally return different 
       // things here.
       return '🐝';
-    }
+    },
+    getDiceResultDivider: mockGetDiceResultDivider
   });
 
   for (var i = 0; i < 8; ++i) {
@@ -245,7 +250,8 @@ test('Error rolls', function errorResults(t) {
   var rollsToTweets = createRollsToTweets({
     getOneCharStamp: function mockGetStamp() {
       return '🐝';
-    }
+    },
+    getDiceResultDivider: mockGetDiceResultDivider
   });
 
   t.deepEqual(
