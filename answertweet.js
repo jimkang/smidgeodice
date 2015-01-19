@@ -42,7 +42,8 @@ function createAnswerTweet(constructorOpts) {
           twit.post,
           'statuses/update',
           {
-            status: text
+            status: text,
+            in_reply_to_status_id: tweet.id_str
           }
         );
       });

@@ -471,4 +471,52 @@ test('Big request', function bigRequest(t) {
     });
   },
   'Handles absurd request without throwing.');
-})
+});
+
+test('Set in_reply_to_status_id', function setInReplyTo(t) {
+  t.plan(2);
+  
+  var tweet = createMockTweet();
+  tweet.user = {
+    screen_name: 'deathmtn'
+  };
+  tweet.text = '@smidgeodice 1d12'
+
+  var answerTweet = createAnswerTweet({
+    dicecup: {
+      roll: function mockRoll() {
+        return [
+          {
+            rolls: [12],
+            total: 12,
+            source: {
+              "times": 1,
+              "faces": 12,
+              "keep": null,
+              "lowest": false,
+              "highest": false,
+              "multiplier": 1,
+              "modifier": 0,
+              "repeat": 1
+            }
+          }
+        ];
+      }
+    },
+    twit: {
+      post: function mockPost(endpoint, opts, done) {
+        t.equal(
+          opts.in_reply_to_status_id, tweet.id_str,
+          'Sets the in_reply_to_status_id field.'
+        )
+        conformAsync.callBackOnNextTick(done);
+      }
+    },
+    getOneCharStamp: mockGetStamp,
+    getDiceResultDivider: mockGetDiceResultDivider
+  });
+
+  answerTweet(tweet, function done(error) {
+    t.ok(!error, 'It does not call back with an error.');
+  });
+});
