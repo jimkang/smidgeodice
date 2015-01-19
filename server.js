@@ -3,6 +3,7 @@ var config = require('./config');
 var createAnswerTweet = require('./answertweet');
 var createDiceCup = require('dicecup');
 var emojiSource = require('emojisource');
+var dividerPicker = require('./dividerpicker');
 
 console.log('The smidgeodice server is running.');
 
@@ -17,7 +18,8 @@ var answerTweet = createAnswerTweet({
     numberOfRollsLimit: 10000,
     numberOfFacesOnLargestDie: 50000
   }),
-  getOneCharStamp: emojiSource.getRandomTopicEmoji
+  getOneCharStamp: emojiSource.getRandomTopicEmoji,
+  getDiceResultDivider: dividerPicker.pickDivider
 });
 
 var stream = twit.stream('user');
