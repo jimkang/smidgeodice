@@ -48,15 +48,11 @@ test('Avoid replying to self-tweets', function selfTweets(t) {
   });
 });
 
-test('Avoid replying to retweets', function selfTweets(t) {
+test('Avoid replying to informal retweets of self', function classicRT(t) {
   t.plan(2);
 
   var tweet = createMockTweet();
-  tweet.retweeted_status = {
-    user: {
-      screen_name: 'smidgeodice'
-    }
-  };
+  tweet.text = 'RT @smidgeodice: 3d6: 5\n1d4: 4';
 
   var answerTweet = createAnswerTweet({
     logger: {
@@ -77,6 +73,67 @@ test('Avoid replying to retweets', function selfTweets(t) {
     t.ok(!error, 'It does not call back with an error.');
   });
 });
+
+test('Avoid replying to formal retweets of self', function retweetOfSelf(t) {
+  t.plan(2);
+
+  var tweet = createMockTweet();
+  tweet.retweeted_status = {
+    user: {
+      screen_name: 'smidgeodice'
+    }
+  };
+
+  var answerTweet = createAnswerTweet({
+    logger: {
+      log: function mockLog(message) {
+        t.equal(message, 'Retweet: Not replying.', 
+          'Logs that it doesn\'t reply to retweets of itself.'
+        );
+      }
+    },
+    twit: {
+      post: function mockPost(opts) {
+        t.fail('Does not call twit.post.');
+      }
+    }
+  });
+
+  answerTweet(tweet, function done(error) {
+    t.ok(!error, 'It does not call back with an error.');
+  });
+});
+
+test('Avoid replying to retweets of others', function selfTweets(t) {
+  t.plan(2);
+
+  var tweet = createMockTweet();
+  tweet.retweeted_status = {
+    user: {
+      screen_name: 'deathmtn'
+    }
+  };
+
+  var answerTweet = createAnswerTweet({
+    logger: {
+      log: function mockLog(message) {
+        t.equal(message, 'Retweet: Not replying.', 
+          'Logs that it doesn\'t reply to retweets.'
+        );
+      }
+    },
+    twit: {
+      post: function mockPost(opts) {
+        t.fail('Does not call twit.post.');
+      }
+    }
+  });
+
+  answerTweet(tweet, function done(error) {
+    t.ok(!error, 'It does not call back with an error.');
+  });
+});
+
 
 test('Don\'t reply with if there\'s no results', function noResults(t) {
   t.plan(1);

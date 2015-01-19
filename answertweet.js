@@ -18,6 +18,11 @@ function createAnswerTweet(constructorOpts) {
       conformAsync.callBackOnNextTick(done, null, '');
       return;
     }
+    else if (tweetIsAFormalRetweet(tweet)) {
+      logger.log('Retweet: Not replying.');
+      conformAsync.callBackOnNextTick(done, null, '');
+      return;
+    }
     else if (betterKnow.isRetweetOfUser('smidgeodice', tweet)) {
       logger.log('Retweet of self: Not replying.');
       conformAsync.callBackOnNextTick(done, null, '');
@@ -72,6 +77,10 @@ function usernameIsNotRollb0t(username) {
 
 function stripMentionsFromText(text) {
   return text.replace(/@\w+/g, '');
+}
+
+function tweetIsAFormalRetweet(tweet) {
+  return 'retweeted_status' in tweet;
 }
 
 module.exports = createAnswerTweet;
