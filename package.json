@@ -29,6 +29,8 @@
     "pm2": "^0.12.3",
     "probable": "^1.1.0",
     "queue-async": "^1.0.7",
-    "twit": "^1.1.19"
+    "quidprofollow": "^1.0.1",
+    "twit": "^1.1.19",
+    "twitterjerkdetector": "^1.0.0"
   }
 }
