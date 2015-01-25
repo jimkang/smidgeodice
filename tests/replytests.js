@@ -3,6 +3,7 @@ var createAnswerTweet = require('../answertweet');
 var fixtures = require('./fixtures');
 var conformAsync = require('conform-async');
 var createDiceCup = require('dicecup');
+var jsonfile = require('jsonfile');
 
 function createMockTweet() {
   return {
@@ -158,6 +159,29 @@ test('Don\'t reply with if there\'s no results', function noResults(t) {
   });
 });
 
+test('Don\'t reply to unrelated tweets.', function unrelated(t) {
+  t.plan(1);
+
+  var tweet = jsonfile.readFileSync(__dirname + '/data/unrelatedtweet.json');
+
+  var answerTweet = createAnswerTweet({
+    twit: {
+      post: function mockPost(opts) {
+        t.fail('Does not call twit.post.');
+      }
+    },
+    dicecup: {
+      roll: function mockRoll() {
+        t.fail('Does not call dicecup.roll.');
+      }
+    }
+  });
+
+  answerTweet(tweet, function done(error) {
+    t.ok(!error, 'It does not call back with an error.');
+  });
+});
+
 var threed6source = {
   "times": 3,
   "faces": 6,
@@ -242,6 +266,7 @@ test('Reply multiple times with long results', function largeSizedResults(t) {
   tweet.user = {
     screen_name: 'pokemon_ebooks'
   };
+ tweet.text = '@smidgeodice (the real tweet text would have dice in it)';
 
   var postCallNumber = 0;
 

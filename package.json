@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jimkang/smidgeodice",
   "devDependencies": {
+    "jsonfile": "^2.0.0",
     "tape": "^3.0.3"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "queue-async": "^1.0.7",
     "quidprofollow": "^1.0.1",
     "twit": "^1.1.19",
+    "twitter-text": "^1.10.0",
     "twitterjerkdetector": "^1.0.0"
   }
 }
