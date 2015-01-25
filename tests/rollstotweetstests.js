@@ -281,3 +281,40 @@ test('Error rolls', function errorResults(t) {
     'Reports roll errors.'
   );
 });
+
+test('0-face rolls', function zeroFacesRolls(t) {
+  t.plan(1);
+
+  var rollsToTweets = createRollsToTweets({
+    getOneCharStamp: function mockGetStamp() {
+      return '🐝';
+    },
+    getDiceResultDivider: mockGetDiceResultDivider
+  });
+
+  var tweets = rollsToTweets({
+    results: [
+      {
+        rolls: [0],
+        source: {
+          faces: 0,
+          highest: false,
+          keep: null,
+          lowest: false,
+          modifier: 0,
+          multiplier: 1,
+          repeat: 1,
+          times: 1
+        },
+        total: 0
+      }
+    ],
+    inReplyTo: ['pokemon_ebooks'],
+  });
+
+  t.deepEqual(
+    tweets, [
+      '@pokemon_ebooks 🐝\nd0 ⇒ 0'
+    ]
+  );
+});

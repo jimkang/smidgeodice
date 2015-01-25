@@ -87,7 +87,12 @@ function formatRollSource(source) {
   }
 
   // add the number of faces
-  text += (source.faces) ? 'd' + source.faces : 'd' + 20;
+  var faceCount = parseInt(source.faces, 10);
+  if (isNaN(faceCount) || faceCount < 0) {
+    return '???';
+  }
+
+  text += 'd' + faceCount;
 
   // add the modifier
   if (source.modifier && source.modifier > 0) {
