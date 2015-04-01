@@ -1,6 +1,6 @@
 APPNAME = smidgeodice
 HOMEDIR = /var/www/$(APPNAME)
-PM2 = $(HOMEDIR)/node_modules/pm2/bin/pm2
+PM2 = pm2
 GITDIR = /var/repos/$(APPNAME).git
 USER = noderunner
 
