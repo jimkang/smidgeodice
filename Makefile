@@ -9,7 +9,7 @@ test:
 	node tests/rollstotweetstests.js
 
 run:
-	$(PM2) start server.js --name $(APPNAME) --watch
+	$(PM2) start server.js --name $(APPNAME)
 
 stop:
 	$(PM2) stop $(APPNAME) || "Didn't need to stop process."
