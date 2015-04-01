@@ -9,10 +9,10 @@ test:
 	node tests/rollstotweetstests.js
 
 run:
-	$(PM2) start server.js --name $(APPNAME)
+	$(PM2) start server.js --name $(APPNAME) --watch
 
 stop:
-	$(PM2) stop $(APPNAME)
+	$(PM2) stop $(APPNAME) || "Didn't need to stop process."
 
 npm-install:
 	cd $(HOMEDIR)
