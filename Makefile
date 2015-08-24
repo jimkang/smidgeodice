@@ -14,6 +14,9 @@ run:
 stop:
 	$(PM2) stop $(APPNAME) || "Didn't need to stop process."
 
+run-webhook:
+	$(PM2) start webhook-server.js --name $(APPNAME)-webhook
+
 npm-install:
 	cd $(HOMEDIR)
 	npm install
