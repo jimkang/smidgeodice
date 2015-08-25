@@ -59,6 +59,11 @@ function respondToRequestWithBody(req, body, res, headers) {
       res.writeHead(404);
       res.end();
     }
+    else if (params.user_name === 'slackbot') {
+      // Don't respond to self; avoid infinite loops.
+      res.writeHead(200);
+      res.end();
+    }
     else {
       var outcomes = dicecup.roll(params.text);
       var responseText;
