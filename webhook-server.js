@@ -51,29 +51,49 @@ function takeRequest(req, res) {
 
 function respondToRequestWithBody(req, body, res, headers) {
   headers['Content-Type'] = 'text/json';
-  console.log('body', body);
+
   try {
-    // webhooktweeter.reportCommitsFromPayload(JSON.parse(body));
     var params = qs.parse(body);
 
-    var outcomes = dicecup.roll(params.text);
-    var replyTexts;
-
-    if (outcomes.some(defined)) {
-      replyTexts = rollsToTweets({
-        results: outcomes,
-        inReplyTo: [params.user_name]
-      });
+    if (config.validWebhookTokens.indexOf(params.token) === -1) {
+      res.writeHead(404);
+      res.end();
     }
-    var responseText = replyTexts.join('\n');
-    res.end(responseText);
+    else {
+      var outcomes = dicecup.roll(params.text);
+      var responseText;
+
+      var response = {
+        username: 'smidgeodice',
+        channel: params.channel_id
+      };
+
+      if (outcomes.length > 0 && outcomes.some(defined)) {
+        var replyTexts = rollsToTweets({
+          results: outcomes,
+          inReplyTo: [params.user_name]
+        });
+        response.text = replyTexts.join(' ');
+      }
+      else {
+        response.text = 'where is dice';
+        response.attachments = [
+          {
+            fallback: 'Zuh?',
+            image_url: 'https://dl.dropboxusercontent.com/u/263768/bonus-confused.jpg'
+          }
+        ];
+      }
+
+      res.writeHead(200, headers);
+      res.end(JSON.stringify(response));
+    }
   }
   catch (e) {
     console.log(e);
-  }
-  
-  res.writeHead(200, headers);
-  res.end();
+    res.writeHead(200, headers);
+    res.end();
+  }  
 }
 
 
