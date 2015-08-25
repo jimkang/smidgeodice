@@ -75,15 +75,15 @@ function respondToRequestWithBody(req, body, res, headers) {
         });
         response.text = replyTexts.join(' ');
       }
-      else {
-        response.text = 'where is dice';
-        response.attachments = [
-          {
-            fallback: 'Zuh?',
-            image_url: 'https://dl.dropboxusercontent.com/u/263768/bonus-confused.jpg'
-          }
-        ];
-      }
+      // else {
+      //   response.text = 'where is dice';
+      //   response.attachments = [
+      //     {
+      //       fallback: 'Zuh?',
+      //       image_url: 'https://dl.dropboxusercontent.com/u/263768/bonus-confused.jpg'
+      //     }
+      //   ];
+      // }
 
       res.writeHead(200, headers);
       res.end(JSON.stringify(response));
