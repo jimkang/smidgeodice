@@ -64,8 +64,11 @@ function respondToRequestWithBody(req, body, res, headers) {
       res.writeHead(200);
       res.end();
     }
-    else {
-      var outcomes = dicecup.roll(params.text);
+    else if (typeof params.text === 'string') {
+      // Remove internal Slack user id references, which may contain 'd[\d]'
+      // substrings.
+      var messageText = params.text.replace(/<\@[\w\d]+>/g, '');
+      var outcomes = dicecup.roll(messageText);
       var responseText;
 
       var response = {
