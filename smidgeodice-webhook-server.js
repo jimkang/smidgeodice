@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var config = require('./config');
 var createDiceCup = require('dicecup');
 var emojiSource = require('emojisource');

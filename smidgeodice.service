@@ -1,0 +1,17 @@
+[Unit]
+Description=smidgeodice
+After=network.target
+
+[Service]
+ExecStart=/opt/smidgeodice/smidgeodice-server.js
+Restart=always
+User=bot
+Group=bot
+Environment=PATH=/usr/bin:/usr/local/bin
+WorkingDirectory=/opt/smidgeodice
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=smidgeodice
+
+[Install]
+WantedBy=multi-user.target

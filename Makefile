@@ -1,38 +1,33 @@
-APPNAME = smidgeodice
-HOMEDIR = /var/www/$(APPNAME)
-PM2 = pm2
-GITDIR = /var/repos/$(APPNAME).git
-USER = noderunner
+HOMEDIR = $(shell pwd)
+USER = bot
+PRIVUSER = root
+SERVER = smidgeo
+SSHCMD = ssh $(USER)@$(SERVER)
+PRIVSSHCMD = ssh $(PRIVUSER)@$(SERVER)
+PROJECTNAME = smidgeodice
+APPDIR = /opt/$(PROJECTNAME)
 
 test:
 	node tests/replytests.js
 	node tests/rollstotweetstests.js
 
-run:
-	$(PM2) start server.js --name $(APPNAME)
+restart-server:
+	$(PRIVSSHCMD) service $(PROJECTNAME) restart
 
-stop:
-	$(PM2) stop $(APPNAME) || "Didn't need to stop process."
+restart-webhook-server:
+	$(PRIVSSHCMD) service $(PROJECTNAME)-webhook restart
 
-run-webhook:
-	$(PM2) start webhook-server.js --name $(APPNAME)-webhook
+sync:
+	rsync -a $(HOMEDIR) $(USER)@$(SERVER):/opt/ --exclude node_modules/
+	$(SSHCMD) "cd  $(APPDIR) && chmod u+x $(PROJECTNAME)-server.js && \
+		chmod u+x $(PROJECTNAME)-webhook-server.js && \
+		npm prune && npm install"
+	$(PRIVSSHCMD) "systemctl restart $(PROJECTNAME) && systemctl restart $(PROJECTNAME)-webhook"
 
-npm-install:
-	cd $(HOMEDIR)
-	npm install
-	npm prune
+install-services:
+	$(PRIVSSHCMD) "cp $(APPDIR)/*.service /etc/systemd/system && \
+		systemctl daemon-reload"
 
-sync-worktree-to-git:
-	git --work-tree=$(HOMEDIR) --git-dir=$(GITDIR) checkout -f
-
-post-receive: sync-worktree-to-git npm-install stop run
-
-# The idea is for the repo's post-receive hook to simply be (minus the var reference):
-# #!/bin/sh
-# cd /var/www/$(APPNAME) && make post-receive
-# (However, it will only work *after* the first time the worktree is synced. That 
-# has to be done manually the first time. Also, don't forget to make the 
-# post-receive file executable.)
-
-install-logrotate-conf:
-	cp $(HOMEDIR)/admin/logrotate.conf_entry /etc/logrotate.d/$(APPNAME)
+check-status:
+	$(SSHCMD) "systemctl status $(PROJECTNAME)"
+	$(SSHCMD) "systemctl status $(PROJECTNAME)-webhook"
