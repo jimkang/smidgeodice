@@ -37,3 +37,6 @@ install-services:
 check-status:
 	$(SSHCMD) "systemctl status $(PROJECTNAME)"
 	$(SSHCMD) "systemctl status $(PROJECTNAME)-webhook"
+
+pushall: sync restart-server restart-webhook-server
+	git push origin master
