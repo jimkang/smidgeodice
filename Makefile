@@ -17,6 +17,12 @@ restart-server:
 restart-webhook-server:
 	$(PRIVSSHCMD) service $(PROJECTNAME)-webhook restart
 
+stop:
+	$(PRIVSSHCMD) "service $(PROJECTNAME) stop"
+
+stop-slack:
+	$(PRIVSSHCMD) "service $(PROJECTNAME)-webhook stop"
+
 sync:
 	rsync -a $(HOMEDIR) $(USER)@$(SERVER):/opt/ --exclude node_modules/
 	$(SSHCMD) "cd  $(APPDIR) && chmod u+x $(PROJECTNAME)-server.js && \
